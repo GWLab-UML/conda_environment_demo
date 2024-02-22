@@ -100,5 +100,20 @@ $ conda env remove -p ./environment
 ```
 
 Now, if you ever need to install new packages you can add it as a line in the `dependencies` section and just run `conda env update`.
+For instance, if you needed both `fastqc` and `multiqc` then add that line:
+
+```
+$ cat environment.yml
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+# It's always good to be in the habbit of hardcoding versions, if you can
+dependencies:
+- python=3.11
+- fastqc
+- multiqc
+$ conda env update
+```
 
 **NOTE**: There is a `./gitignore` file in the root of the repo that specifically excludes everything in the `./environment` folder from being committed. It is important to use that prefix!
