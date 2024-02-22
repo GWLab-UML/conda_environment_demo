@@ -1,0 +1,8 @@
+channels:
+  - conda-forge
+  - bioconda
+  - defaults
+# It's always good to be in the habbit of hardcoding versions, if you can
+dependencies:
+- python=3.11
+- fastqc
