@@ -13,7 +13,7 @@ This repo is an example setup for persisting Conda environments _alongside_ the 
 This way, different users can be assured they are using the same setup when running the same notebooks/tools.
 It will also make moving between your personal computer and shared servers more simple.
 
-### Getting Started
+## Getting Started
 
 Follow the directions to get [get started with Conda](https://docs.conda.io/projects/conda/en/stable/user-guide/getting-started.html).
 We recommend following the tutorials for familiarizing yourself with the Conda CLI.
@@ -55,24 +55,37 @@ $ du -sh ~/miniconda3/envs/myenv/
 Moreover, the _details_ of this environment are isolated to my local conda install, as everything is persisted in my home directory.
 To get around this, we are going to setup a _local_ environment folder and configuration file that will let us commit the Conda environment right alongside our code.
 
-### Using Prefixes and Yaml
+### Configuring Environments with Yaml and Prefixes
 
-Rather than doing everything from the CLI as one offs, we can use [environment files](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#sharing-an-environment) to save and share  setups.
-In this repo, we have setup an [environment.yml](environment.yml) file for just that purpose:
+Rather than doing everything from the CLI as one offs, we can use [environment files](https://conda.io/projects/conda/en/latest/user-guide/tasks/manage-environments.html#sharing-an-environment) to save and share setups.
+It is **strongly** encouraged to use yaml to configure environments since it makes sharing, debugging, and reproducing work much, much easier.
+
+In this repo, we have setup an [environment.yml](environment.yml) file for just that purpose.
 
 ```
+# Recommend using channel_priority: strict to avoid conflicts
 channels:
   - conda-forge
   - bioconda
   - defaults
-# It's always good to be in the habbit of hardcoding versions, if you can
+# When possible, we recommend hardcoding versions
 dependencies:
 - python=3.11
-- fastqc
+
+# Use the latest version of jupyter
+- jupyter=1.0.0
+- ipykernel=6.28.0
+
+# We're going to be using R in a juypter environment, so setup necessary packages
+- r-base=4.3.3
+- r-irkernel=1.3.2
+
+# Install other packages as necessary, when using conda this is preferable for
+# avoiding dynamic linking issues
+- r-tidyverse=2.0.0
 ```
 
-For this environment we want both `python` and `fastqc`, the latter coming from the `bioconda` channel.
-Note the advantage here!
+In this demo we're going to setup an isolated jupyter and R environment in a local folder.
 Rather than specifing channels at the _global_ level in `~/.condarc`, you can have them on a per-project basis.
 
 To create an environment and put everything into a local folder, we have to use `prefixes` rather than names.
@@ -104,16 +117,57 @@ For instance, if you needed both `fastqc` and `multiqc` then add that line:
 
 ```
 $ cat environment.yml
-channels:
-  - conda-forge
-  - bioconda
-  - defaults
-# It's always good to be in the habbit of hardcoding versions, if you can
+...
 dependencies:
 - python=3.11
+...
 - fastqc
 - multiqc
 $ conda env update
 ```
 
-**NOTE**: There is a `./gitignore` file in the root of the repo that specifically excludes everything in the `./environment` folder from being committed. It is important to use that prefix!
+**NOTE**: There is a `./gitignore` file in the root of the repo that specifically excludes everything in the `./environment` folder from being committed.
+It is important to use that prefix!
+
+## Using Conda with Jupyter and R
+
+Once you've built and activated your environment, you can install the required R kernel and run `jupyter lab` to check the demo.
+
+```
+# First install the Kernel
+$ R -e 'IRkernel::installspec()'
+
+# Start Jupyter and checkout the `Sample-R` notebook.
+# jupyter lab
+```
+
+### Gotchas for MacOS
+
+On later versions of MacOS, you may run into compiler or dynamic linking issues compiling R packages from source.
+For example, when using `install.packages(...)` or `BiocManager::install(...)`, you may see errors like:
+
+```
+In file included from ./data.table.h:2:
+./dt_stdio.h:30:12: fatal error: 'stdio.h' file not found
+   30 |   #include <stdio.h>
+```
+
+If possible, we recommend installing any required R packages from pre-built binaries using Conda to avoid the need to compile dynamically linked libraries from scratch.
+For instance in this repo we have installed `tidyverse` and `biocmanager` directly from the conda-forge channel,
+and `EnhancedVolcano` directly from the bioconda channel.
+This way you do not need to bother mucking around with commands above.
+
+Reminder that most R packages are prefixed by `r-`, and to search for a specific package:
+
+```
+$ conda search -c <channel-name> <package name>
+
+# E.g.
+$ conda search -c conda-forge *tidyverse*
+```
+
+This will give you all available versions.
+
+**NOTE**: It is certainly possible that a particular package/version that you need for an analysis was not released to any channel.
+If that is the case you may be stuck building for source, and your options for doing that in a Conda environment may be limited.
+

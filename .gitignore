@@ -1,1 +1,9 @@
+# Ignore all installed content
 environment/*
+
+# Jupyter content
+.ipynb_checkpoints/*
+
+# R content
+.RData
+.Rhistory
