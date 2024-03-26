@@ -21,6 +21,10 @@ We recommend following the tutorials for familiarizing yourself with the Conda C
 
 There are many different distrubutions, but I personally recommend using [miniconda3](https://docs.anaconda.com/free/miniconda/index.html) since it's quick and easy to setup.
 
+## Building and Using Environments
+
+Conda environments are folders that contain specific collections of packages that are installed and managed with `conda`.
+
 ### Environment Storage
 
 In a nutshell, when you run something like:
