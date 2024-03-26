@@ -8,6 +8,7 @@ To get around this, we use `virtual environments` that allow us to install packa
 [Conda](https://docs.conda.io/en/latest/) is one such environment and package management system widely used in the scientific community.
 Conda has a multitude of `channels` for installing software from different collections (think of them as apt sources, or big ol' libraries).
 [Bioconda](https://bioconda.github.io/index.html) is a Conda channel that has a good number of packages related to the work we do.
+[conda-forge](https://conda-forge.org) is another that has a huge number of packages, including many pre-compiled R binaries.
 
 This repo is an example setup for persisting Conda environments _alongside_ the code that uses them.
 This way, different users can be assured they are using the same setup when running the same notebooks/tools.
