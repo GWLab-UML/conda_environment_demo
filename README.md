@@ -83,6 +83,8 @@ dependencies:
 # Install other packages as necessary, when using conda this is preferable for
 # avoiding dynamic linking issues
 - r-tidyverse=2.0.0
+- r-biocmanager=1.30.22
+- bioconductor-enhancedvolcano=1.20.0
 ```
 
 In this demo we're going to setup an isolated jupyter and R environment in a local folder.
