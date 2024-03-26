@@ -18,8 +18,7 @@ It will also make moving between your personal computer and shared servers more 
 Follow the directions to get [get started with Conda](https://docs.conda.io/projects/conda/en/stable/user-guide/getting-started.html).
 We recommend following the tutorials for familiarizing yourself with the Conda CLI.
 
-You can optionally setup the [Bioconda](https://bioconda.github.io/index.html#usage) channel.
-Though as you will see below, it may be preferable to not configure that source list globally.
+There are many different distrubutions, but I personally recommend using [miniconda3](https://docs.anaconda.com/free/miniconda/index.html) since it's quick and easy to setup.
 
 ### Environment Storage
 
