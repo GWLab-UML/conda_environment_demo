@@ -2,8 +2,8 @@
 environment/*
 
 # Jupyter content
-.ipynb_checkpoints/*
+**/.ipynb_checkpoints/*
 
 # R content
-.RData
-.Rhistory
+**/.RData
+**/.Rhistory
