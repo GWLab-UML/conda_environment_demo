@@ -30,7 +30,7 @@ Conda environments are folders that contain specific collections of packages tha
 In a nutshell, when you run something like:
 
 ```
-$ conda create --name myenv python=3.11
+$ conda create --name myenv python=3.12
 $ conda activate myenv
 ```
 
@@ -74,7 +74,7 @@ channels:
   - defaults
 # When possible, we recommend hardcoding versions
 dependencies:
-- python=3.11
+- python=3.12
 
 # Use the latest version of jupyter
 - jupyter=1.0.0
@@ -125,7 +125,7 @@ For instance, if you needed both `fastqc` and `multiqc` then add that line:
 $ cat environment.yml
 ...
 dependencies:
-- python=3.11
+- python=3.12
 ...
 - fastqc
 - multiqc
@@ -176,4 +176,3 @@ This will give you all available versions.
 
 **NOTE**: It is certainly possible that a particular package/version that you need for an analysis was not released to any channel.
 If that is the case you may be stuck building for source, and your options for doing that in a Conda environment may be limited.
-
